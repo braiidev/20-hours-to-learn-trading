@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scalping Master Plan — 20 Horas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --cream2: #EDE6D9;
+  --sidebar: #17120E;
+  --sidebar2: #241C16;
+  --text: #2D2621;
+  --text2: #6B5E52;
+  --text3: #9C8E82;
+  --card: #FFFFFF;
+  --border: rgba(45,38,33,0.10);
+  --border2: rgba(45,38,33,0.18);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --font-head: 'Fraunces', Georgia, serif;
+  --font-body: 'Lora', Georgia, serif;
+  --font-ui: 'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ──────────────────────────────────── */
+.sidebar {
+  width: 280px;
+  min-height: 100vh;
+  background: var(--sidebar);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #3a2e26 transparent;
+}
+
+.sidebar-logo {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.sidebar-logo .logo-tag {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.sidebar-logo h1 {
+  font-family: var(--font-head);
+  font-size: 18px;
+  font-weight: 600;
+  color: #F5F0E8;
+  line-height: 1.3;
+}
+
+.sidebar-progress {
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.prog-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+.prog-label span { color: rgba(255,255,255,0.75); }
+.prog-track {
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  background: #C9A96E;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+.nav-list {
+  padding: 12px 0 24px;
+  flex: 1;
+  list-style: none;
+}
+.nav-item {
+  padding: 0 12px;
+  margin-bottom: 2px;
+}
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+.nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.06); }
+.nav-btn.active { background: rgba(201,169,110,0.15); }
+.nav-btn:disabled { cursor: not-allowed; opacity: 0.45; }
+
+.nav-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.05);
+  transition: all 0.3s;
+}
+.nav-btn.active .nav-num {
+  background: #C9A96E;
+  border-color: #C9A96E;
+  color: #17120E;
+}
+.nav-btn.done .nav-num {
+  background: rgba(72,187,120,0.2);
+  border-color: rgba(72,187,120,0.5);
+  color: #68D391;
+}
+
+.nav-info { flex: 1; min-width: 0; }
+.nav-title {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+.nav-btn.active .nav-title { color: #F5F0E8; }
+.nav-btn.done .nav-title { color: rgba(255,255,255,0.8); }
+.nav-sub {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  margin-top: 1px;
+}
+.nav-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+/* ── MAIN ─────────────────────────────────────── */
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 0 0 80px;
+}
+
+.session-page { display: none; }
+.session-page.active { display: block; }
+
+/* ── SESSION HERO ─────────────────────────────── */
+.session-hero {
+  padding: 52px 56px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  max-width: 860px;
+}
+
+.hero-left { flex: 1; min-width: 0; }
+.session-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.session-number {
+  font-family: var(--font-head);
+  font-style: italic;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+.session-title {
+  font-family: var(--font-head);
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.session-meta {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--text3);
+  display: flex;
+  gap: 20px;
+}
+.session-meta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hero-illustration {
+  flex-shrink: 0;
+  width: 160px;
+  height: 160px;
+}
+
+.hero-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 36px 56px 0;
+  max-width: 804px;
+}
+
+/* ── CONTENT SECTIONS ─────────────────────────── */
+.session-body {
+  padding: 0 56px;
+  max-width: 860px;
+}
+
+.content-section {
+  margin-top: 40px;
+}
+
+.section-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.why-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 28px;
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+}
+.why-box::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+/* ── TOPICS ───────────────────────────────────── */
+.topics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.topic-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14.5px;
+  color: var(--text);
+  line-height: 1.5;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+.topic-item:hover {
+  border-color: var(--border2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.topic-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+/* ── RESOURCES ────────────────────────────────── */
+.resources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.resource-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.resource-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+  background: var(--cream2);
+}
+.resource-content {}
+.resource-title {
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+}
+.resource-desc {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+.resource-link {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  margin-top: 4px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.resource-link:hover { opacity: 0.75; text-decoration: underline; }
+
+/* ── REVIEW / QUIZ ────────────────────────────── */
+.review-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.review-header {
+  padding: 18px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.review-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.review-clock {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--cream2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.review-title-text {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.review-subtitle {
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  color: var(--text3);
+  margin-top: 1px;
+}
+.review-score-badge {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--cream2);
+  color: var(--text2);
+}
+.review-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.quiz-question {}
+.q-num {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+.q-text {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+.q-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.q-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+.q-opt:hover:not(:disabled):not(.correct):not(.wrong) {
+  border-color: rgba(45,38,33,0.3);
+  background: var(--cream2);
+}
+.q-opt.selected:not(.correct):not(.wrong) {
+  border-color: rgba(45,38,33,0.4);
+  background: var(--cream2);
+}
+.q-opt.correct {
+  border-color: #48BB78;
+  background: rgba(72,187,120,0.08);
+}
+.q-opt.wrong {
+  border-color: #FC8181;
+  background: rgba(252,129,129,0.08);
+}
+.q-opt:disabled { cursor: default; }
+
+.opt-letter {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cream2);
+  border: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.15s;
+}
+.q-opt.selected:not(.correct):not(.wrong) .opt-letter {
+  background: var(--text);
+  color: white;
+  border-color: var(--text);
+}
+.q-opt.correct .opt-letter { background: #48BB78; border-color: #48BB78; color: white; }
+.q-opt.wrong .opt-letter { background: #FC8181; border-color: #FC8181; color: white; }
+
+.opt-text {
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.45;
+  padding-top: 2px;
+}
+
+.review-footer {
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.submit-btn {
+  padding: 11px 28px;
+  border-radius: 10px;
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: white;
+}
+.submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.submit-btn:active { transform: scale(0.97); }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.retry-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border2);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text2);
+  transition: all 0.2s;
+  display: none;
+}
+.retry-btn:hover { background: var(--cream2); }
+
+.result-message {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  display: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+.result-message.success {
+  background: rgba(72,187,120,0.1);
+  color: #2D7D50;
+  border: 1px solid rgba(72,187,120,0.3);
+}
+.result-message.fail {
+  background: rgba(252,129,129,0.1);
+  color: #9B2C2C;
+  border: 1px solid rgba(252,129,129,0.3);
+}
+
+/* ── NEXT BUTTON ──────────────────────────────── */
+.next-section {
+  margin-top: 32px;
+  display: none;
+  animation: fadeUp 0.4s ease forwards;
+}
+.next-section.visible { display: block; }
+.next-card {
+  background: var(--sidebar);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.next-card-info {}
+.next-card-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 6px;
+}
+.next-card-title {
+  font-family: var(--font-head);
+  font-size: 20px;
+  font-weight: 600;
+  color: #F5F0E8;
+  line-height: 1.25;
+}
+.next-btn {
+  padding: 13px 28px;
+  border-radius: 10px;
+  border: none;
+  background: #C9A96E;
+  color: #17120E;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.next-btn:hover { background: #D4BA82; transform: translateY(-1px); }
+
+.final-card {
+  background: linear-gradient(135deg, #1A3A2A 0%, #17120E 100%);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  text-align: center;
+}
+.final-card h2 {
+  font-family: var(--font-head);
+  font-size: 28px;
+  color: #F5F0E8;
+  margin-bottom: 12px;
+}
+.final-card p {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: rgba(245,240,232,0.6);
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.final-stars {
+  font-size: 28px;
+  margin-bottom: 16px;
+  letter-spacing: 4px;
+}
+
+/* ── LOCKED OVERLAY ───────────────────────────── */
+.locked-screen {
+  padding: 80px 56px;
+  max-width: 860px;
+  text-align: center;
+}
+.locked-icon { font-size: 48px; margin-bottom: 20px; opacity: 0.5; }
+.locked-title {
+  font-family: var(--font-head);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.locked-text {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--text3);
+  line-height: 1.6;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* ── MOBILE ───────────────────────────────────── */
+.mobile-header {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--sidebar);
+  padding: 14px 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+.mobile-title {
+  font-family: var(--font-head);
+  font-size: 15px;
+  color: #F5F0E8;
+}
+.menu-btn {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #F5F0E8;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  body { flex-direction: column; }
+  .sidebar {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 260px;
+    height: 100vh;
+    z-index: 200;
+  }
+  .sidebar.open { display: flex; }
+  .mobile-header { display: flex; }
+  .session-hero {
+    padding: 28px 20px 0;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .hero-illustration { width: 100px; height: 100px; align-self: center; }
+  .session-title { font-size: 28px; }
+  .hero-divider { margin: 24px 20px 0; }
+  .session-body { padding: 0 20px; }
+  .locked-screen { padding: 60px 20px; }
+}
+
+/* ── ANIMATIONS ───────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+.session-page.active .session-hero { animation: fadeUp 0.4s ease; }
+.session-page.active .why-box { animation: fadeUp 0.4s ease 0.1s both; }
+
+.confetti-star {
+  display: inline-block;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+/* ── TOOLTIP ──────────────────────────────────── */
+.tip {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--text3);
+  font-style: italic;
+  text-align: center;
+  margin-top: 8px;
+}
+</style>
+</head>
+<body>
+
+<button class="menu-btn" style="display:none" onclick="toggleSidebar()" id="menuBtn">☰</button>
+
+<div class="mobile-header">
+  <span class="mobile-title">Scalping 20h</span>
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-tag">Plan de Estudio</div>
+    <h1>Scalping &amp; Intradía Rentable</h1>
+  </div>
+  <div class="sidebar-progress">
+    <div class="prog-label">Progreso <span id="prog-text">0 / 10</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+  </div>
+  <ul class="nav-list" id="nav-list"></ul>
+</aside>
+
+<!-- MAIN -->
+<main class="main" id="main-content"></main>
+
+<script>
+// ───────────────────────────────────────────────────────
+//  DATA
+// ───────────────────────────────────────────────────────
+const sessions = [
+{
+  id: 0,
+  color: '#6B5B95',
+  colorBg: '#F0EDF8',
+  colorLight: 'rgba(107,91,149,0.12)',
+  tag: 'FUNDAMENTOS',
+  title: 'Estructura del Mercado & Price Action',
+  why: 'Todo lo demás se construye sobre esto. Sin entender cómo se mueve el precio, ninguna estrategia funciona de forma consistente. Es el lenguaje base del trading profesional.',
+  topics: [
+    'Cómo funciona el mercado: compradores vs vendedores',
+    'Estructura: máximos, mínimos, impulso y corrección',
+    'Tendencia, rango y cambio de estructura (CHoCH / BOS)',
+    'Lectura del flujo del precio sin indicadores',
+    'Timeframes para scalping: 1m, 5m, 15m y su relación'
+  ],
+  resources: [
+    { icon: '▶', title: 'Smart Money Concepts — Básico', desc: 'Busca en YouTube: "ICT Concepts for beginners" o "SMC scalping español"', link: 'https://www.youtube.com/results?search_query=SMC+smart+money+concepts+scalping+español' },
+    { icon: '📘', title: 'Trading in the Zone — Mark Douglas', desc: 'Capítulos 1-3: mentalidad y estructura básica del mercado', link: null },
+    { icon: '🖥', title: 'TradingView (gratuito)', desc: 'Abre EURUSD en 5m. Observa 30 minutos sin operar, solo identifica estructura', link: 'https://www.tradingview.com' }
+  ],
+  quiz: [
+    {
+      q: '¿Qué describe mejor un BOS (Break of Structure)?',
+      opts: ['El precio cierra por encima de la EMA 20', 'El precio rompe el último máximo o mínimo relevante en la dirección de la tendencia', 'Una vela pin bar aparece en zona de demanda', 'El RSI supera el nivel 70'],
+      ans: 1
+    },
+    {
+      q: '¿Cómo se relacionan los timeframes en scalping?',
+      opts: ['Solo se usa el gráfico de 1 minuto para todo', 'Se usa un TF mayor para contexto de estructura y uno menor para la entrada', 'Los timeframes no son relevantes en scalping', 'Solo se analiza el gráfico semanal'],
+      ans: 1
+    },
+    {
+      q: '¿Qué indica un CHoCH (Change of Character)?',
+      opts: ['Que el volumen está aumentando significativamente', 'Una posible inversión de tendencia: el precio rompe la última estructura en contra de la tendencia dominante', 'Que debemos cerrar todas las posiciones inmediatamente', 'El inicio de una tendencia muy acelerada'],
+      ans: 1
+    }
+  ]
+},
+{
+  id: 1,
+  color: '#0F8A7D',
+  colorBg: '#E8F7F5',
+  colorLight: 'rgba(15,138,125,0.12)',
+  tag: 'ENTRADA',
+  title: 'Velas Japonesas — Solo Las Que Importan',
+  why: 'Los traders rentables usan 5-7 patrones de velas. Aprende los de mayor probabilidad estadística y olvida el resto. La simplicidad gana en el largo plazo.',
+  topics: [
+    'Pin Bar / Vela de rechazo: el patrón más importante en scalping',
+    'Envolvente bajista y alcista en zonas clave',
+    'Doji en contexto (no de forma aislada)',
+    'Vela de continuación: inside bar y su significado',
+    'Lectura del tamaño de mecha vs cuerpo para evaluar fuerza'
+  ],
+  resources: [
+    { icon: '▶', title: 'Al Brooks — Reading Candlestick Charts', desc: 'YouTube: precio de acción y lectura de velas avanzada. Busca "Al Brooks candlestick"', link: 'https://www.youtube.com/results?search_query=al+brooks+candlestick+scalping' },
+    { icon: '🖥', title: 'Ejercicio TradingView', desc: 'Busca 50 pin bars en EURUSD 5m. Anota qué porcentaje siguió la dirección del rechazo', link: 'https://www.tradingview.com' },
+    { icon: '📄', title: 'Candlestick Charting Explained — Bulkowski', desc: 'PDF gratuito con estadísticas reales de rendimiento de cada patrón', link: 'https://thepatternsite.com/candlesticks.html' }
+  ],
+  quiz: [
+    {
+      q: '¿Qué característica define un Pin Bar alcista?',
+      opts: ['Cuerpo grande arriba y mecha larga hacia abajo', 'Dos mechas iguales y cuerpo en el centro', 'Sin mecha inferior y cuerpo completamente rojo', 'Cuerpo grande abajo y mecha larga hacia arriba'],
+      ans: 0
+    },
+    {
+      q: '¿Qué es una vela "inside bar" y qué señala?',
+      opts: ['Una vela que rompe el rango de la vela anterior', 'Una vela cuyo cuerpo y mechas están dentro del rango de la vela anterior; indica consolidación y posible continuación', 'Una vela de reversión exclusiva de zonas de demanda', 'Una vela con cuerpo muy grande sin mechas'],
+      ans: 1
+    },
+    {
+      q: '¿Por qué el contexto es fundamental al leer un Doji?',
+      opts: ['Porque el Doji siempre indica compra inmediata', 'Porque el Doji aislado no tiene valor; solo es significativo en zonas clave o extremos de tendencia', 'Porque indica ruptura de resistencia inminente', 'Porque el Doji solo aparece en gráficos diarios'],
+      ans: 1
+    }
+  ]
+},
+{
+  id: 2,
+  color: '#C0740A',
+  colorBg: '#FBF2E3',
+  colorLight: 'rgba(192,116,10,0.12)',
+  tag: 'ZONAS',
+  title: 'Soporte, Resistencia & Zonas de Oferta/Demanda',
+  why: 'El 80% de las entradas rentables ocurren desde zonas clave. Dominar esto es dominar el timing. Sin esto, los setups pierden contexto y probabilidad.',
+  topics: [
+    'Soporte y resistencia: niveles horizontales con historia',
+    'Zonas de oferta (supply) y demanda (demand)',
+    'Zonas de valor: ¿dónde quiere volver el precio?',
+    'Confluencias: zona + estructura + vela de confirmación',
+    'Cómo trazar niveles sin saturar el gráfico (máximo 3)'
+  ],
+  resources: [
+    { icon: '▶', title: 'Supply & Demand Zones en Scalping', desc: 'YouTube: "supply and demand zones forex scalping tutorial"', link: 'https://www.youtube.com/results?search_query=supply+demand+zones+scalping+forex+tutorial' },
+    { icon: '🖥', title: 'Ejercicio de calidad sobre cantidad', desc: 'Traza SOLO 3 zonas por gráfico. Nada más. Observa cómo reacciona el precio en ellas', link: 'https://www.tradingview.com' },
+    { icon: '💡', title: 'Concepto clave: zona fresca vs testeada', desc: 'Busca solo zonas que el precio no haya vuelto a tocar después de formarse (máxima probabilidad)', link: null }
+  ],
+  quiz: [
+    {
+      q: 'Una zona de demanda "fresca" significa:',
+      opts: ['Fue testeada 3 o más veces con éxito', 'El precio nunca regresó a ella desde que se formó originalmente', 'Tiene gran volumen visible en la vela de formación', 'Está cercana a un máximo histórico del instrumento'],
+      ans: 1
+    },
+    {
+      q: '¿Cuántos niveles recomienda el plan trazar por gráfico?',
+      opts: ['Todos los que puedas identificar para mayor seguridad', 'Solo 1 nivel absoluto', 'Máximo 3, priorizando calidad sobre cantidad', 'Entre 8 y 10 para tener opciones'],
+      ans: 2
+    },
+    {
+      q: '¿Qué es una confluencia en trading?',
+      opts: ['Cuando dos indicadores dan señales opuestas que se cancelan', 'La coincidencia de múltiples factores independientes que aumentan la probabilidad de éxito de una operación', 'Cuando el precio alcanza máximos históricos', 'Un patrón específico de tres velas japonesas'],
+      ans: 1
+    }
+  ]
+},
+{
+  id: 3,
+  color: '#1A6FA8',
+  colorBg: '#E3F1FB',
+  colorLight: 'rgba(26,111,168,0.12)',
+  tag: 'HERRAMIENTAS',
+  title: 'Indicadores Esenciales — Solo 3 Necesitas',
+  why: 'Más indicadores no significa más información útil — significa más ruido. EMA + RSI + VWAP cubren el 80% de lo que necesitas interpretar del mercado.',
+  topics: [
+    'EMA 9/21 para dirección de tendencia y momentum',
+    'RSI(14): sobrecompra/sobreventa EN CONTEXTO, no aislado',
+    'VWAP: el nivel institucional de referencia del día',
+    'Cómo combinar los 3 sin redundancia ni contradicción',
+    'Lo que los indicadores NO te dicen (igual de importante)'
+  ],
+  resources: [
+    { icon: '▶', title: 'EMA + RSI + VWAP Combo', desc: 'YouTube: "The Trading Channel EMA RSI VWAP strategy scalping"', link: 'https://www.youtube.com/results?search_query=EMA+RSI+VWAP+scalping+strategy+tutorial' },
+    { icon: '🖥', title: 'Configura tu pantalla limpia', desc: 'Abre TradingView y pon SOLO estos 3 indicadores. Elimina absolutamente todo lo demás', link: 'https://www.tradingview.com' },
+    { icon: '💡', title: 'Regla de oro', desc: 'El indicador confirma, el precio manda. Nunca entres solo por indicador sin estructura y zona', link: null }
+  ],
+  quiz: [
+    {
+      q: '¿Para qué sirven las EMAs 9 y 21 en scalping?',
+      opts: ['Para predecir el precio exacto que tendrá el activo mañana', 'Para identificar la dirección del momentum y zonas dinámicas de pullback potencial', 'Para medir el volumen del mercado en tiempo real', 'Para calcular automáticamente el tamaño de la posición'],
+      ans: 1
+    },
+    {
+      q: 'El VWAP es especialmente útil porque:',
+      opts: ['Predice reversiones con alta precisión matemática', 'Muestra el precio promedio ponderado por volumen del día, referencia clave para el flujo institucional', 'Es el indicador más rápido disponible para scalping', 'Reemplaza completamente el análisis de velas y estructura'],
+      ans: 1
+    },
+    {
+      q: '¿Cuándo el RSI por encima de 70 señala venta inmediata?',
+      opts: ['Siempre que supere 70, es señal de venta directa', 'Nunca por sí solo: el RSI solo confirma; necesitas contexto de estructura, zona y vela para operar', 'Cuando también hay un cruce de EMAs en el mismo momento', 'Solo en gráficos de 1 minuto con volumen alto'],
+      ans: 1
+    }
+  ]
+},
+{
+  id: 4,
+  color: '#B91C1C',
+  colorBg: '#FEF2F2',
+  colorLight: 'rgba(185,28,28,0.12)',
+  tag: '★ CRÍTICO',
+  title: 'Gestión del Riesgo — La Sesión Más Importante',
+  why: 'El 90% de los traders que quiebran tienen buenas entradas pero una gestión del riesgo deficiente. Esta sesión decide tu supervivencia en el mercado a largo plazo.',
+  topics: [
+    'Regla del 1%: nunca arriesgues más del 1% del capital por operación',
+    'Cálculo del tamaño de posición (position sizing) paso a paso',
+    'Ratio Riesgo:Recompensa mínimo recomendado de 1:2',
+    'Stop loss: técnico (basado en estructura) vs fijo en puntos',
+    'Drawdown máximo diario: cuándo parar de operar completamente'
+  ],
+  resources: [
+    { icon: '▶', title: 'Risk Management Masterclass', desc: 'YouTube: "Anton Kreil risk management" o "1% rule trading explained"', link: 'https://www.youtube.com/results?search_query=trading+risk+management+1+percent+rule+explained' },
+    { icon: '🖥', title: 'Calculadora de Position Sizing', desc: 'myfxbook.com/forex-calculators/position-size — gratuita y fácil de usar', link: 'https://www.myfxbook.com/forex-calculators/position-size' },
+    { icon: '📝', title: 'Ejercicio obligatorio', desc: 'Calcula el tamaño correcto para 10 operaciones hipotéticas con una cuenta de $1,000', link: null }
+  ],
+  quiz: [
+    {
+      q: 'Con una cuenta de $1,000 arriesgando el 1% por operación, ¿cuánto dinero arriesgas máximo?',
+      opts: ['$100 por operación', '$50 por operación', '$10 por operación', '$1 por operación'],
+      ans: 2
+    },
+    {
+      q: '¿Qué significa un ratio Riesgo:Recompensa de 1:2?',
+      opts: ['Ganas exactamente el doble de lo que arriesgas por cada operación', 'Arriesgas el doble de lo que puedes ganar', 'Tienes un 50% garantizado de probabilidad de ganar', 'El stop loss es el doble del tamaño del take profit'],
+      ans: 0
+    },
+    {
+      q: '¿Para qué sirve definir un "stop diario" en tu plan de trading?',
+      opts: ['Para obligarte a operar más si el mercado está muy activo ese día', 'Para detener la operativa cuando alcanzas una pérdida máxima predefinida, previniendo el revenge trading', 'Es exactamente lo mismo concepto que un stop loss en una operación', 'Solo aplica para traders con cuentas de más de $10,000'],
+      ans: 1
+    }
+  ]
+},
+{
+  id: 5,
+  color: '#6D28D9',
+  colorBg: '#F3EFFE',
+  colorLight: 'rgba(109,40,217,0.12)',
+  tag: 'SETUPS',
+  title: 'Setups de Alta Probabilidad para Scalping',
+  why: 'Solo necesitas 2-3 setups que entiendas en profundidad. La especialización vence a la diversificación. Un setup bien ejecutado consistentemente es más valioso que diez mediocremente comprendidos.',
+  topics: [
+    'Setup 1: Pullback a EMA en tendencia clara y definida',
+    'Setup 2: Rebote desde zona fresca con confluencia de señales',
+    'Setup 3: Ruptura y retest de estructura (BOS + retroceso)',
+    'Cómo identificar si el setup tiene suficientes confluencias',
+    'Qué condiciones invalidan un setup antes de entrar'
+  ],
+  resources: [
+    { icon: '▶', title: 'High Probability Scalping Setups', desc: 'YouTube: "Rayner Teo high probability setups" o "scalping setups forex 2024"', link: 'https://www.youtube.com/results?search_query=high+probability+scalping+setups+forex+rayner+teo' },
+    { icon: '🖥', title: 'Ejercicio de especialización', desc: 'Elige UN solo setup. Busca 20 ejemplos históricos en TradingView. Calcula el win rate real', link: 'https://www.tradingview.com' },
+    { icon: '💡', title: 'Regla de los 30 segundos', desc: 'Si no puedes explicar tu setup en 30 segundos con claridad, aún no lo dominas lo suficiente para operarlo', link: null }
+  ],
+  quiz: [
+    {
+      q: '¿Qué describe correctamente el setup "pullback a EMA"?',
+      opts: ['Entras inmediatamente cuando el precio rompe la EMA hacia arriba', 'El precio retrocede hacia la EMA dentro de una tendencia establecida y muestra una vela de reversión para entrar', 'Compras automáticamente cuando la EMA rápida cruza la lenta', 'Vendes cuando el precio se aleja demasiado de la EMA principal'],
+      ans: 1
+    },
+    {
+      q: 'Una confluencia válida para un setup de compra incluye:',
+      opts: ['RSI en nivel 50 y una vela aleatoria en cualquier lugar', 'Zona de demanda fresca + Pin Bar alcista + EMA actuando como soporte dinámico', 'Precio en máximo del día con volumen bajo y sin estructura', 'Dos medias móviles cruzadas sin contexto de estructura previa'],
+      ans: 1
+    },
+    {
+      q: '¿Qué significa que un setup "se invalida" antes de entrar?',
+      opts: ['Que el precio se movió en la dirección esperada antes de tu entrada exacta', 'Que alguna condición clave del setup dejó de cumplirse (ej: precio rompió la zona, la vela de entrada fue superada)', 'Que el spread del instrumento aumentó temporalmente', 'Que no tienes acceso al mercado en ese horario específico'],
+      ans: 1
+    }
+  ]
+},
+{
+  id: 6,
+  color: '#065F46',
+  colorBg: '#ECFDF5',
+  colorLight: 'rgba(6,95,70,0.12)',
+  tag: 'MENTALIDAD',
+  title: 'Psicología del Trader & Disciplina',
+  why: 'El enemigo número uno no es el mercado, eres tú mismo. La psicología representa el 50% del resultado real de un trader. Sin esto, ninguna estrategia técnica funciona.',
+  topics: [
+    'Los 4 errores mentales que destruyen cuentas de trading',
+    'FOMO, revenge trading y overtrading: cómo detectarlos y combatirlos',
+    'Cómo crear un estado mental óptimo pre-trading',
+    'Journaling: la herramienta más subestimada del trading profesional',
+    'Aceptar las pérdidas como costo del negocio (no como fracasos)'
+  ],
+  resources: [
+    { icon: '▶', title: 'Trading Psychology — Mark Douglas', desc: 'YouTube: "Mark Douglas trading psychology" — conferencias completas con subtítulos', link: 'https://www.youtube.com/results?search_query=mark+douglas+trading+psychology+discipline' },
+    { icon: '📘', title: 'Trading in the Zone — Mark Douglas', desc: 'Lectura completa esencial. El libro más importante de psicología del trading jamás escrito', link: null },
+    { icon: '📝', title: 'Ejercicio de autoconocimiento', desc: 'Escribe tus 3 errores psicológicos más frecuentes en trading. Diseña una regla específica para cada uno', link: null }
+  ],
+  quiz: [
+    {
+      q: 'El "revenge trading" ocurre cuando:',
+      opts: ['Copias la estrategia de un trader exitoso para mejorar tus resultados', 'Abres operaciones de forma impulsiva para recuperar pérdidas recientes, rompiendo el plan', 'Operas con un plan muy estricto y sin emociones', 'Usas stop loss demasiado ajustados en zonas de alta volatilidad'],
+      ans: 1
+    },
+    {
+      q: '¿Qué es el FOMO en trading?',
+      opts: ['Un indicador técnico de momentum acelerado', 'El miedo a perderse un movimiento del mercado, que lleva a entrar en operaciones fuera del plan establecido', 'Una estrategia avanzada de scalping de alta frecuencia', 'El sentimiento positivo después de cerrar una operación ganadora'],
+      ans: 1
+    },
+    {
+      q: '¿Para qué sirve el journaling o bitácora de trading?',
+      opts: ['Para compartir y presumir tus operaciones ganadoras en redes sociales', 'Para registrar operaciones, emociones y errores, identificando patrones que mejoran o dañan tu rendimiento', 'Solo es útil durante el primer año de trading', 'Para calcular tus declaraciones fiscales al finalizar el año'],
+      ans: 1
+    }
+  ]
+},
+{
+  id: 7,
+  color: '#92400E',
+  colorBg: '#FDF6EB',
+  colorLight: 'rgba(146,64,14,0.12)',
+  tag: 'SISTEMA',
+  title: 'Plan de Trading & Reglas de Oro',
+  why: 'Sin un plan escrito, operas con emociones. El plan es tu CEO y tú eres el ejecutor. Un plan mediocre ejecutado consistentemente supera a una estrategia brillante sin disciplina.',
+  topics: [
+    'Cómo escribir tu plan de trading personal (template práctico)',
+    'Reglas de entrada, gestión durante la operación y salida por escrito',
+    'Horarios óptimos para scalping: sesiones de Londres y Nueva York',
+    'Reglas no negociables: stop diario, máximo de operaciones por sesión',
+    'Cómo calcular si tu sistema tiene expectativa positiva (matemáticas simples)'
+  ],
+  resources: [
+    { icon: '▶', title: 'How to Build a Trading Plan', desc: 'YouTube: "Warrior Trading trading plan template" o "trading plan step by step"', link: 'https://www.youtube.com/results?search_query=warrior+trading+plan+template+day+trading' },
+    { icon: '📄', title: 'Template de Plan de Trading', desc: 'Descarga un template en Notion o Google Docs: busca "trading plan template PDF free"', link: 'https://www.google.com/search?q=trading+plan+template+PDF+free+download' },
+    { icon: '🕐', title: 'Horarios clave Forex', desc: 'Londres: 8-11am UTC+1 | Nueva York: 13-16pm UTC-4 | Solapamiento: mayor liquidez y oportunidades', link: null }
+  ],
+  quiz: [
+    {
+      q: 'La "expectativa matemática" de un sistema se calcula con:',
+      opts: ['Solo el porcentaje de operaciones ganadoras (win rate)', 'Win rate × ganancia promedio − lose rate × pérdida promedio por operación', 'El número total de operaciones abiertas en el período', 'La diferencia en pips entre el stop y el target promedio'],
+      ans: 1
+    },
+    {
+      q: '¿Cuáles son los mejores horarios para scalping en Forex?',
+      opts: ['De madrugada cuando hay menos participantes activos', 'Apertura de Londres (8-11am UTC) y solapamiento con Nueva York (13-16pm UTC)', 'Al cierre del mercado asiático por mayor volumen residual', 'Solo los viernes por la tarde antes del cierre semanal'],
+      ans: 1
+    },
+    {
+      q: '¿Qué debe incluir obligatoriamente un plan de trading efectivo?',
+      opts: ['Solo las reglas de entrada al mercado', 'Reglas de entrada, gestión durante la operación, criterios de salida, pérdida máxima diaria y horarios operativos', 'La lista completa de todos los activos posibles a operar', 'Predicciones del mercado elaboradas para la semana siguiente'],
+      ans: 1
+    }
+  ]
+},
+{
+  id: 8,
+  color: '#0E7490',
+  colorBg: '#ECF9FC',
+  colorLight: 'rgba(14,116,144,0.12)',
+  tag: 'DATOS',
+  title: 'Backtesting & Análisis de Operaciones',
+  why: 'Lo que no se mide no mejora. El backtesting convierte intuición en estadística accionable. Es la única forma honesta de saber si tu sistema funciona realmente.',
+  topics: [
+    'Cómo hacer backtesting manual en TradingView (paso a paso)',
+    'Métricas clave: win rate, R:R promedio, expectativa, drawdown máximo',
+    'Cómo usar el journal para detectar patrones de errores repetitivos',
+    'Forward testing en demo: simulación real en tiempo de mercado',
+    'Cuántas operaciones necesitas para tener datos estadísticamente válidos'
+  ],
+  resources: [
+    { icon: '▶', title: 'Backtesting Manual en TradingView', desc: 'YouTube: "backtesting manual tradingview tutorial español step by step"', link: 'https://www.youtube.com/results?search_query=backtesting+manual+tradingview+tutorial+español' },
+    { icon: '🖥', title: 'Herramienta de Journal', desc: 'Edgewonk (pagado, muy completo) o Google Sheets gratuito con template básico de métricas', link: 'https://edgewonk.com' },
+    { icon: '💡', title: 'Regla de las 50 operaciones', desc: 'Necesitas mínimo 50 operaciones antes de poder evaluar con rigor estadístico si un sistema funciona', link: null }
+  ],
+  quiz: [
+    {
+      q: 'Si tienes un win rate del 40% pero un R:R de 1:3, tu sistema es:',
+      opts: ['Perdedor porque ganas menos del 50% de las veces', 'Rentable matemáticamente: 0.4 × 3 − 0.6 × 1 = +0.6 esperanza por trade', 'Neutral y necesita exactamente más datos antes de poder evaluar', 'Imposible de evaluar con esos dos datos únicamente'],
+      ans: 1
+    },
+    {
+      q: '¿Cuántas operaciones mínimas necesitas para que el backtest sea estadísticamente significativo?',
+      opts: ['5 a 10 operaciones son suficientes si fueron rentables', '20 operaciones es el mínimo aceptable', 'Mínimo 50 operaciones para tener datos con valor estadístico', 'Siempre se necesitan 500 operaciones o el resultado no es válido'],
+      ans: 2
+    },
+    {
+      q: '¿Cuál es la diferencia entre backtesting y forward testing?',
+      opts: ['Son exactamente el mismo proceso con diferentes nombres', 'Backtesting analiza datos históricos pasados; forward testing simula operativa en tiempo real con cuenta demo', 'Forward testing usa datos históricos y backtesting usa datos del futuro', 'Solo el backtesting es útil para evaluar y mejorar un sistema de trading'],
+      ans: 1
+    }
+  ]
+},
+{
+  id: 9,
+  color: '#1E3A5F',
+  colorBg: '#EBF2FA',
+  colorLight: 'rgba(30,58,95,0.12)',
+  tag: 'EN VIVO',
+  title: 'Integración: Práctica en Vivo & Refinamiento',
+  why: 'El conocimiento sin ejecución no tiene ningún valor. Esta sesión es el puente entre aprender conceptos y ganar dinero real de forma consistente y sostenida.',
+  topics: [
+    'Sesión de práctica en demo con checklist completo de setup',
+    'Grabación y revisión detallada de al menos 5 operaciones propias',
+    'Identificación de tu edge personal: qué funciona específicamente para TI',
+    'Transición de demo a cuenta real: cuándo y cómo hacerlo correctamente',
+    'Plan de las próximas 4 semanas de práctica deliberada y enfocada'
+  ],
+  resources: [
+    { icon: '▶', title: 'Proceso de Práctica Deliberada en Trading', desc: 'YouTube: "deliberate practice trading routine demo account" paso a paso', link: 'https://www.youtube.com/results?search_query=deliberate+practice+trading+demo+account+routine' },
+    { icon: '🖥', title: 'Brokers Demo Recomendados', desc: 'OANDA, Pepperstone o Interactive Brokers — todos con cuentas demo gratuitas y sin límite de tiempo', link: 'https://www.oanda.com/us-en/trading/demo-account/' },
+    { icon: '📋', title: 'Checklist Pre-Operación', desc: '¿Estructura clara? → ¿Zona válida? → ¿Confluencia? → ¿R:R ≥ 1:2? → ¿Stop técnico definido? → ¿Horario correcto?', link: null }
+  ],
+  quiz: [
+    {
+      q: '¿Cuándo es el momento correcto para pasar de cuenta demo a cuenta real?',
+      opts: ['Después de una semana consecutiva con operaciones ganadoras', 'Cuando sientes confianza alta y entusiasmo por el mercado', 'Con al menos 3 meses consecutivos de rentabilidad en demo simulando tamaños de posición reales', 'Cuando completas el plan de 20 horas de estudio'],
+      ans: 2
+    },
+    {
+      q: '¿Cuál es el checklist mínimo antes de entrar en una operación de scalping?',
+      opts: ['¿Hay movimiento en el mercado? ¿Parece una buena oportunidad visual?', '¿Hay estructura clara? ¿Zona válida? ¿Confluencia presente? ¿R:R ≥ 1:2? ¿Stop técnico definido?', '¿El RSI está bajo? ¿El spread es aceptable?', '¿El mercado está abierto? ¿Tengo capital suficiente disponible?'],
+      ans: 1
+    },
+    {
+      q: '¿Qué significa encontrar tu "edge" o ventaja personal en trading?',
+      opts: ['Usar el indicador más avanzado y menos conocido disponible', 'Identificar el conjunto específico de condiciones y setups donde TU sistema tiene probabilidad estadísticamente positiva demostrada', 'Copiar fielmente la estrategia exacta del trader más famoso y exitoso', 'Operar el activo más volátil del mercado para maximizar las ganancias'],
+      ans: 1
+    }
+  ]
+}
+];
+
+// SVG ILLUSTRATIONS
+const illustrations = [
+  // 0 - Market Structure
+  `<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="160" height="160" rx="16" fill="#F0EDF8"/>
+    <!-- Chart background -->
+    <rect x="20" y="25" width="120" height="110" rx="6" fill="white" opacity="0.7"/>
+    <!-- Grid lines -->
+    <line x1="20" y1="80" x2="140" y2="80" stroke="#6B5B95" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.3"/>
+    <line x1="20" y1="55" x2="140" y2="55" stroke="#6B5B95" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.3"/>
+    <line x1="20" y1="105" x2="140" y2="105" stroke="#6B5B95" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.3"/>
+    <!-- Candles -->
+    <line x1="35" y1="115" x2="35" y2="100" stroke="#10B981" stroke-width="1.5"/>
+    <rect x="31" y="100" width="8" height="12" rx="1" fill="#10B981"/>
+    <line x1="50" y1="110" x2="50" y2="90" stroke="#10B981" stroke-width="1.5"/>
+    <rect x="46" y="90" width="8" height="16" rx="1" fill="#10B981"/>
+    <line x1="65" y1="100" x2="65" y2="75" stroke="#10B981" stroke-width="1.5"/>
+    <rect x="61" y="75" width="8" height="20" rx="1" fill="#10B981"/>
+    <line x1="80" y1="88" x2="80" y2="68" stroke="#EF4444" stroke-width="1.5"/>
+    <rect x="76" y="72" width="8" height="12" rx="1" fill="#EF4444"/>
+    <line x1="95" y1="80" x2="95" y2="58" stroke="#10B981" stroke-width="1.5"/>
+    <rect x="91" y="58" width="8" height="16" rx="1" fill="#10B981"/>
+    <line x1="110" y1="65" x2="110" y2="45" stroke="#10B981" stroke-width="1.5"/>
+    <rect x="106" y="45" width="8" height="16" rx="1" fill="#10B981"/>
+    <!-- BOS line -->
+    <line x1="60" y1="75" x2="140" y2="75" stroke="#6B5B95" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <!-- BOS label -->
+    <rect x="112" y="67" width="24" height="11" rx="3" fill="#6B5B95"/>
+    <text x="124" y="75.5" text-anchor="middle" fill="white" font-size="6" font-family="DM Sans, sans-serif" font-weight="600">BOS</text>
+    <!-- Arrow up -->
+    <path d="M125 110 L125 90 L130 95 M125 90 L120 95" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="80" y="145" text-anchor="middle" fill="#6B5B95" font-size="8.5" font-family="DM Sans, sans-serif" font-weight="600">ESTRUCTURA</text>
+  </svg>`,
+
+  // 1 - Candlesticks
+  `<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="160" height="160" rx="16" fill="#E8F7F5"/>
+    <text x="80" y="22" text-anchor="middle" fill="#0F8A7D" font-size="8" font-family="DM Sans,sans-serif" font-weight="600">PIN BAR</text>
+    <!-- Pin Bar -->
+    <line x1="33" y1="35" x2="33" y2="120" stroke="#0F8A7D" stroke-width="2"/>
+    <rect x="26" y="88" width="14" height="20" rx="2" fill="#0F8A7D"/>
+    <!-- Engulfing label -->
+    <text x="80" y="22" text-anchor="middle" fill="#0F8A7D" font-size="7.5" font-family="DM Sans,sans-serif" font-weight="600" opacity="0">x</text>
+    <!-- Labels below -->
+    <text x="33" y="132" text-anchor="middle" fill="#0F8A7D" font-size="7" font-family="DM Sans,sans-serif">Pin Bar</text>
+    <!-- Engulfing -->
+    <line x1="70" y1="45" x2="70" y2="115" stroke="#0F8A7D" stroke-width="1.5"/>
+    <rect x="63" y="75" width="14" height="30" rx="2" fill="#EF4444" opacity="0.85"/>
+    <rect x="60" y="55" width="20" height="38" rx="2" fill="#10B981"/>
+    <text x="70" y="132" text-anchor="middle" fill="#0F8A7D" font-size="7" font-family="DM Sans,sans-serif">Envolvente</text>
+    <!-- Doji -->
+    <line x1="108" y1="40" x2="108" y2="120" stroke="#6B5B95" stroke-width="1.5"/>
+    <rect x="101" y="75" width="14" height="6" rx="2" fill="#6B5B95"/>
+    <text x="108" y="132" text-anchor="middle" fill="#6B5B95" font-size="7" font-family="DM Sans,sans-serif">Doji</text>
+    <!-- Inside bar -->
+    <line x1="140" y1="50" x2="140" y2="118" stroke="#C0740A" stroke-width="1.5"/>
+    <rect x="133" y="60" width="14" height="40" rx="2" fill="#C0740A" opacity="0.3"/>
+    <rect x="135" y="72" width="10" height="22" rx="2" fill="#C0740A"/>
+    <text x="140" y="132" text-anchor="middle" fill="#C0740A" font-size="7" font-family="DM Sans,sans-serif">Inside</text>
+    <text x="80" y="148" text-anchor="middle" fill="#0F8A7D" font-size="8.5" font-family="DM Sans,sans-serif" font-weight="600">PATRONES CLAVE</text>
+  </svg>`,
+
+  // 2 - Zones
+  `<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="160" height="160" rx="16" fill="#FBF2E3"/>
+    <rect x="15" y="28" width="130" height="18" rx="4" fill="#EF4444" opacity="0.18"/>
+    <text x="80" y="40" text-anchor="middle" fill="#EF4444" font-size="7.5" font-family="DM Sans,sans-serif" font-weight="600">SUPPLY / RESISTENCIA</text>
+    <rect x="15" y="114" width="130" height="18" rx="4" fill="#10B981" opacity="0.18"/>
+    <text x="80" y="126" text-anchor="middle" fill="#10B981" font-size="7.5" font-family="DM Sans,sans-serif" font-weight="600">DEMAND / SOPORTE</text>
+    <!-- Price line zigzag -->
+    <polyline points="20,100 38,85 55,95 72,72 88,68 98,80 108,50 118,44 130,50 142,40" stroke="#C0740A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- Bounce arrows -->
+    <path d="M55 93 L55 105 L60 100 M55 105 L50 100" stroke="#10B981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M108 53 L108 36 L103 41 M108 36 L113 41" stroke="#EF4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- FRESH badge -->
+    <rect x="84" y="54" width="32" height="11" rx="3" fill="#C0740A"/>
+    <text x="100" y="62" text-anchor="middle" fill="white" font-size="6.5" font-family="DM Sans,sans-serif" font-weight="600">FRESCA</text>
+    <text x="80" y="148" text-anchor="middle" fill="#C0740A" font-size="8.5" font-family="DM Sans,sans-serif" font-weight="600">ZONAS DE VALOR</text>
+  </svg>`,
+
+  // 3 - Indicators
+  `<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="160" height="160" rx="16" fill="#E3F1FB"/>
+    <!-- Chart area -->
+    <rect x="15" y="22" width="130" height="80" rx="5" fill="white" opacity="0.6"/>
+    <!-- Price candles simplified -->
+    <polyline points="22,88 40,75 58,80 76,60 94,65 112,48 130,52 142,44" stroke="#1A6FA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.5"/>
+    <!-- EMA fast -->
+    <polyline points="22,88 40,76 58,79 76,61 94,64 112,49 130,51 142,45" stroke="#1A6FA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- EMA slow -->
+    <polyline points="22,92 40,82 58,84 76,70 94,70 112,58 130,57 142,52" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-dasharray="5 3"/>
+    <!-- VWAP -->
+    <line x1="15" y1="68" x2="145" y2="68" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="6 3"/>
+    <rect x="118" y="62" width="28" height="11" rx="3" fill="#8B5CF6"/>
+    <text x="132" y="70" text-anchor="middle" fill="white" font-size="6.5" font-family="DM Sans,sans-serif" font-weight="600">VWAP</text>
+    <!-- RSI area -->
+    <rect x="15" y="108" width="130" height="30" rx="5" fill="white" opacity="0.6"/>
+    <line x1="15" y1="122" x2="145" y2="122" stroke="#1A6FA8" stroke-width="0.8" opacity="0.3"/>
+    <polyline points="22,130 40,118 58,125 76,112 94,115 112,108 130,116 142,120" stroke="#1A6FA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- Legend -->
+    <circle cx="22" cy="146" r="3.5" fill="#1A6FA8"/>
+    <text x="27" y="149.5" fill="#1A6FA8" font-size="7" font-family="DM Sans,sans-serif" font-weight="500">EMA</text>
+    <circle cx="60" cy="146" r="3.5" fill="#F59E0B"/>
+    <text x="65" y="149.5" fill="#C0740A" font-size="7" font-family="DM Sans,sans-serif" font-weight="500">EMA slow</text>
+    <circle cx="112" cy="146" r="3.5" fill="#8B5CF6"/>
+    <text x="117" y="149.5" fill="#8B5CF6" font-size="7" font-family="DM Sans,sans-serif" font-weight="500">RSI</text>
+  </svg>`,
+
+  // 4 - Risk Management
+  `<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="160" height="160" rx="16" fill="#FEF2F2"/>
+    <!-- Shield -->
+    <path d="M80 22 L110 35 L110 75 Q110 105 80 118 Q50 105 50 75 L50 35 Z" fill="#FEE2E2" stroke="#B91C1C" stroke-width="2"/>
+    <!-- 1% text inside -->
+    <text x="80" y="75" text-anchor="middle" fill="#B91C1C" font-size="22" font-family="Fraunces, Georgia, serif" font-weight="700">1%</text>
+    <text x="80" y="92" text-anchor="middle" fill="#B91C1C" font-size="8" font-family="DM Sans,sans-serif" font-weight="600">POR TRADE</text>
+    <!-- Divider line -->
+    <line x1="30" y1="130" x2="130" y2="130" stroke="#B91C1C" stroke-width="0.8" opacity="0.3"/>
+    <!-- R:R label -->
+    <rect x="25" y="136" width="50" height="14" rx="4" fill="#FEE2E2"/>
+    <text x="50" y="146" text-anchor="middle" fill="#B91C1C" font-size="7.5" font-family="DM Sans,sans-serif" font-weight="600">R:R ≥ 1:2</text>
+    <rect x="85" y="136" width="50" height="14" rx="4" fill="#FEE2E2"/>
+    <text x="110" y="146" text-anchor="middle" fill="#B91C1C" font-size="7.5" font-family="DM Sans,sans-serif" font-weight="600">STOP DIARIO</text>
+  </svg>`,
+
+  // 5 - Setups
+  `<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="160" height="160" rx="16" fill="#F3EFFE"/>
+    <!-- Crosshair circles -->
+    <circle cx="80" cy="78" r="50" stroke="#6D28D9" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.25"/>
+    <circle cx="80" cy="78" r="32" stroke="#6D28D9" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/>
+    <circle cx="80" cy="78" r="16" stroke="#6D28D9" stroke-width="2" opacity="0.65"/>
+    <circle cx="80" cy="78" r="5" fill="#6D28D9"/>
+    <!-- Cross lines -->
+    <line x1="80" y1="22" x2="80" y2="48" stroke="#6D28D9" stroke-width="1.5" opacity="0.5"/>
+    <line x1="80" y1="108" x2="80" y2="128" stroke="#6D28D9" stroke-width="1.5" opacity="0.5"/>
+    <line x1="24" y1="78" x2="54" y2="78" stroke="#6D28D9" stroke-width="1.5" opacity="0.5"/>
+    <line x1="106" y1="78" x2="136" y2="78" stroke="#6D28D9" stroke-width="1.5" opacity="0.5"/>
+    <!-- Setup labels -->
+    <rect x="22" y="136" width="36" height="13" rx="3" fill="#6D28D9" opacity="0.15"/>
+    <text x="40" y="145.5" text-anchor="middle" fill="#6D28D9" font-size="6.5" font-family="DM Sans,sans-serif" font-weight="600">PULLBACK</text>
+    <rect x="62" y="136" width="36" height="13" rx="3" fill="#6D28D9" opacity="0.15"/>
+    <text x="80" y="145.5" text-anchor="middle" fill="#6D28D9" font-size="6.5" font-family="DM Sans,sans-serif" font-weight="600">REBOTE</text>
+    <rect x="102" y="136" width="36" height="13" rx="3" fill="#6D28D9" opacity="0.15"/>
+    <text x="120" y="145.5" text-anchor="middle" fill="#6D28D9" font-size="6.5" font-family="DM Sans,sans-serif" font-weight="600">RETEST</text>
+  </svg>`,
+
+  // 6 - Psychology
+  `<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="160" height="160" rx="16" fill="#ECFDF5"/>
+    <!-- Brain outline simplified -->
+    <path d="M58 80 Q48 65 55 50 Q62 35 75 35 Q82 30 90 35 Q102 32 108 45 Q118 55 112 70 Q120 80 115 92 Q112 105 100 110 Q95 118 85 118 Q75 118 70 110 Q58 105 55 92 Q50 82 58 80Z" fill="#D1FAE5" stroke="#065F46" stroke-width="2"/>
+    <!-- Brain folds -->
+    <path d="M72 50 Q80 58 72 65 Q80 72 72 80" stroke="#065F46" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+    <path d="M90 45 Q95 55 88 63 Q95 72 90 82" stroke="#065F46" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+    <!-- Calm waves around -->
+    <path d="M25 80 Q30 73 35 80 Q40 87 45 80" stroke="#065F46" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+    <path d="M115 80 Q120 73 125 80 Q130 87 135 80" stroke="#065F46" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+    <!-- Zen symbol at bottom -->
+    <text x="80" y="145" text-anchor="middle" fill="#065F46" font-size="9" font-family="DM Sans,sans-serif" font-weight="600">DISCIPLINA MENTAL</text>
+    <!-- Stars/sparkles -->
+    <text x="32" y="52" fill="#065F46" font-size="12" opacity="0.5">✦</text>
+    <text x="118" y="48" fill="#065F46" font-size="10" opacity="0.5">✦</text>
+    <text x="80" y="25" fill="#065F46" font-size="8" opacity="0.4">✦</text>
+  </svg>`,
+
+  // 7 - Plan
+  `<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="160" height="160" rx="16" fill="#FDF6EB"/>
+    <!-- Document -->
+    <rect x="35" y="20" width="90" height="115" rx="8" fill="white" stroke="#92400E" stroke-width="1.5"/>
+    <!-- Header -->
+    <rect x="35" y="20" width="90" height="28" rx="8" fill="#92400E"/>
+    <rect x="35" y="37" width="90" height="11" fill="#92400E"/>
+    <text x="80" y="37" text-anchor="middle" fill="white" font-size="8" font-family="DM Sans,sans-serif" font-weight="700">TRADING PLAN</text>
+    <!-- Lines -->
+    <line x1="50" y1="60" x2="110" y2="60" stroke="#F3D9AE" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="50" y1="74" x2="100" y2="74" stroke="#F3D9AE" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="50" y1="88" x2="108" y2="88" stroke="#F3D9AE" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="50" y1="102" x2="95" y2="102" stroke="#F3D9AE" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Checkmarks -->
+    <circle cx="43" cy="60" r="5" fill="#D1FAE5" stroke="#065F46" stroke-width="1"/>
+    <path d="M40 60 L42 62 L46 58" stroke="#065F46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="43" cy="74" r="5" fill="#D1FAE5" stroke="#065F46" stroke-width="1"/>
+    <path d="M40 74 L42 76 L46 72" stroke="#065F46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="43" cy="88" r="5" fill="#FEE2E2" stroke="#EF4444" stroke-width="1" opacity="0.7"/>
+    <circle cx="43" cy="102" r="5" fill="#EBF4FF" stroke="#92400E" stroke-width="1" opacity="0.5"/>
+    <text x="80" y="152" text-anchor="middle" fill="#92400E" font-size="8.5" font-family="DM Sans,sans-serif" font-weight="600">PLAN ESCRITO</text>
+  </svg>`,
+
+  // 8 - Backtesting
+  `<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="160" height="160" rx="16" fill="#ECF9FC"/>
+    <!-- Chart frame -->
+    <rect x="18" y="25" width="124" height="90" rx="6" fill="white" opacity="0.7"/>
+    <!-- Bars (backtest results) -->
+    <rect x="30" y="85" width="14" height="20" rx="3" fill="#0E7490" opacity="0.5"/>
+    <rect x="50" y="75" width="14" height="30" rx="3" fill="#0E7490" opacity="0.6"/>
+    <rect x="70" y="60" width="14" height="45" rx="3" fill="#0E7490" opacity="0.7"/>
+    <rect x="90" y="50" width="14" height="55" rx="3" fill="#0E7490" opacity="0.85"/>
+    <rect x="110" y="38" width="14" height="67" rx="3" fill="#0E7490"/>
+    <!-- Trend line -->
+    <line x1="30" y1="100" x2="124" y2="42" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 3"/>
+    <!-- Stats cards -->
+    <rect x="18" y="122" width="38" height="24" rx="5" fill="white" stroke="#E0F2FE" stroke-width="1"/>
+    <text x="37" y="131" text-anchor="middle" fill="#0E7490" font-size="7.5" font-family="DM Sans,sans-serif" font-weight="600">Win Rate</text>
+    <text x="37" y="141" text-anchor="middle" fill="#0E7490" font-size="9" font-family="DM Sans,sans-serif" font-weight="700">55%</text>
+    <rect x="61" y="122" width="38" height="24" rx="5" fill="white" stroke="#E0F2FE" stroke-width="1"/>
+    <text x="80" y="131" text-anchor="middle" fill="#0E7490" font-size="7.5" font-family="DM Sans,sans-serif" font-weight="600">R:R avg</text>
+    <text x="80" y="141" text-anchor="middle" fill="#0E7490" font-size="9" font-family="DM Sans,sans-serif" font-weight="700">1:2.3</text>
+    <rect x="104" y="122" width="38" height="24" rx="5" fill="white" stroke="#E0F2FE" stroke-width="1"/>
+    <text x="123" y="131" text-anchor="middle" fill="#0E7490" font-size="7.5" font-family="DM Sans,sans-serif" font-weight="600">Trades</text>
+    <text x="123" y="141" text-anchor="middle" fill="#0E7490" font-size="9" font-family="DM Sans,sans-serif" font-weight="700">50+</text>
+  </svg>`,
+
+  // 9 - Live
+  `<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="160" height="160" rx="16" fill="#EBF2FA"/>
+    <!-- Rocket body -->
+    <path d="M80 18 Q68 35 65 62 L95 62 Q92 35 80 18Z" fill="#1E3A5F"/>
+    <!-- Rocket window -->
+    <circle cx="80" cy="48" r="8" fill="#EBF2FA" stroke="#1E3A5F" stroke-width="1.5"/>
+    <circle cx="80" cy="48" r="4.5" fill="#1E3A5F" opacity="0.3"/>
+    <!-- Wings -->
+    <path d="M65 62 L52 82 L65 78Z" fill="#2D4F7C"/>
+    <path d="M95 62 L108 82 L95 78Z" fill="#2D4F7C"/>
+    <!-- Body bottom -->
+    <rect x="65" y="62" width="30" height="20" rx="2" fill="#1E3A5F"/>
+    <!-- Flames -->
+    <path d="M72 82 Q75 98 70 105 Q78 95 80 102 Q82 95 90 105 Q85 98 88 82Z" fill="#F59E0B" opacity="0.9"/>
+    <path d="M75 82 Q78 93 76 98 Q80 90 84 98 Q82 93 85 82Z" fill="#FCD34D"/>
+    <!-- Stars -->
+    <text x="30" y="40" fill="#1E3A5F" font-size="10" opacity="0.35">★</text>
+    <text x="120" y="55" fill="#1E3A5F" font-size="8" opacity="0.35">★</text>
+    <text x="40" y="70" fill="#1E3A5F" font-size="7" opacity="0.25">★</text>
+    <text x="125" y="88" fill="#1E3A5F" font-size="9" opacity="0.3">★</text>
+    <text x="80" y="148" text-anchor="middle" fill="#1E3A5F" font-size="8.5" font-family="DM Sans,sans-serif" font-weight="600">¡A OPERAR EN VIVO!</text>
+  </svg>`
+];
+
+// ───────────────────────────────────────────────────────
+//  STATE
+// ───────────────────────────────────────────────────────
+let unlockedUp = 0; // highest unlocked index
+let currentSession = 0;
+const completed = new Set();
+const quizAnswers = {}; // sessionId -> {qIdx: optIdx}
+const quizSubmitted = {}; // sessionId -> true/false
+
+// ───────────────────────────────────────────────────────
+//  BUILD UI
+// ───────────────────────────────────────────────────────
+function buildSidebar() {
+  const list = document.getElementById('nav-list');
+  list.innerHTML = sessions.map((s, i) => {
+    const isLocked = i > unlockedUp;
+    const isDone = completed.has(i);
+    const isActive = i === currentSession;
+    const lockIcon = isLocked ? '🔒' : isDone ? '✓' : '';
+    return `
+    <li class="nav-item">
+      <button class="nav-btn ${isActive?'active':''} ${isDone?'done':''}"
+        onclick="navigate(${i})"
+        ${isLocked?'disabled':''}>
+        <div class="nav-num">${isDone ? '✓' : i+1}</div>
+        <div class="nav-info">
+          <div class="nav-title">${s.title}</div>
+          <div class="nav-sub">Sesión ${i+1} de 10 · 2h + 15min</div>
+        </div>
+        <span class="nav-icon">${isLocked ? '🔒' : isDone ? '' : ''}</span>
+      </button>
+    </li>`;
+  }).join('');
+}
+
+function buildProgressBar() {
+  const n = completed.size;
+  document.getElementById('prog-text').textContent = `${n} / 10`;
+  document.getElementById('prog-fill').style.width = `${n*10}%`;
+}
+
+function buildMain() {
+  const main = document.getElementById('main-content');
+  main.innerHTML = sessions.map((s, i) => buildSessionPage(s, i)).join('');
+}
+
+function buildSessionPage(s, i) {
+  const isLocked = i > unlockedUp;
+  return `
+<div class="session-page ${i===currentSession?'active':''}" id="page-${i}">
+
+  ${isLocked ? `
+  <div class="locked-screen">
+    <div class="locked-icon">🔒</div>
+    <div class="locked-title">Sesión bloqueada</div>
+    <div class="locked-text">Completa la sesión anterior con 100% en la revisión para desbloquear esta sesión.</div>
+  </div>
+  ` : `
+  <!-- HERO -->
+  <div class="session-hero">
+    <div class="hero-left">
+      <div class="session-tag" style="background:${s.colorLight};color:${s.color}">
+        ${s.tag}
+      </div>
+      <div class="session-number">Sesión ${i+1} de 10 · 2 horas + 15 min revisión</div>
+      <h2 class="session-title">${s.title}</h2>
+      <div class="session-meta">
+        <span>⏱ 2h práctica</span>
+        <span>📋 15 min quiz</span>
+        <span>🎯 Principio de Pareto</span>
+      </div>
+    </div>
+    <div class="hero-illustration">${illustrations[i]}</div>
+  </div>
+  <div class="hero-divider"></div>
+
+  <!-- BODY -->
+  <div class="session-body">
+
+    <!-- WHY -->
+    <div class="content-section">
+      <div class="section-label">¿Por qué importa esta sesión?</div>
+      <div class="why-box" style="border-left-color:${s.color}">
+        <div style="height:100%;position:absolute;left:0;top:0;bottom:0;width:4px;background:${s.color};border-radius:4px 0 0 4px"></div>
+        ${s.why}
+      </div>
+    </div>
+
+    <!-- TOPICS -->
+    <div class="content-section">
+      <div class="section-label">Tópicos principales (el 20% que importa)</div>
+      <div class="topics-grid">
+        ${s.topics.map((t,ti) => `
+        <div class="topic-item">
+          <div class="topic-dot" style="background:${s.color}"></div>
+          <span>${t}</span>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- RESOURCES -->
+    <div class="content-section">
+      <div class="section-label">Recursos recomendados</div>
+      <div class="resources-list">
+        ${s.resources.map(r => `
+        <div class="resource-card">
+          <div class="resource-icon" style="background:${s.colorLight};color:${s.color}">${r.icon}</div>
+          <div class="resource-content">
+            <div class="resource-title">${r.title}</div>
+            <div class="resource-desc">${r.desc}</div>
+            ${r.link ? `<a class="resource-link" href="${r.link}" target="_blank" style="color:${s.color}">Abrir recurso →</a>` : ''}
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="content-section" style="margin-bottom:0">
+      <div class="section-label">Revisión de 15 minutos — Demuestra que lo entendiste</div>
+      <div class="review-box">
+        <div class="review-header">
+          <div class="review-header-left">
+            <div class="review-clock" style="background:${s.colorLight}">⏱</div>
+            <div>
+              <div class="review-title-text">Revisión Final · Sesión ${i+1}</div>
+              <div class="review-subtitle">Necesitas 3/3 para desbloquear la siguiente sesión</div>
+            </div>
+          </div>
+          <div class="review-score-badge" id="score-badge-${i}">0 / 3</div>
+        </div>
+        <div class="review-body" id="quiz-body-${i}">
+          ${s.quiz.map((q, qi) => buildQuestion(i, qi, q, s)).join('')}
+        </div>
+        <div class="review-footer">
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <div class="result-message" id="result-msg-${i}"></div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="retry-btn" id="retry-btn-${i}" onclick="retryQuiz(${i})">↺ Reintentar</button>
+            <button class="submit-btn" id="submit-btn-${i}" onclick="submitQuiz(${i})"
+              style="background:${s.color}" disabled>
+              Verificar respuestas
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEXT -->
+    <div class="next-section" id="next-section-${i}">
+      ${i < sessions.length-1 ? `
+      <div class="next-card">
+        <div class="next-card-info">
+          <div class="next-card-label">Siguiente sesión desbloqueada ✓</div>
+          <div class="next-card-title">${sessions[i+1].title}</div>
+        </div>
+        <button class="next-btn" onclick="navigate(${i+1})">Continuar →</button>
+      </div>
+      ` : `
+      <div class="final-card">
+        <div class="final-stars">
+          <span class="confetti-star">⭐</span><span class="confetti-star" style="animation-delay:.2s">⭐</span><span class="confetti-star" style="animation-delay:.4s">⭐</span>
+        </div>
+        <h2>¡Plan de 20 Horas Completado!</h2>
+        <p>Has dominado el 20% del conocimiento que genera el 80% de los resultados. Ahora empieza tu práctica deliberada. El mercado es tu siguiente maestro.</p>
+      </div>
+      `}
+    </div>
+    <div style="height:60px"></div>
+  </div>
+  `}
+</div>`;
+}
+
+function buildQuestion(si, qi, q, s) {
+  const letters = ['A','B','C','D'];
+  return `
+<div class="quiz-question" id="question-${si}-${qi}">
+  <div class="q-num">Pregunta ${qi+1} de 3</div>
+  <div class="q-text">${q.q}</div>
+  <div class="q-options">
+    ${q.opts.map((opt, oi) => `
+    <button class="q-opt" id="opt-${si}-${qi}-${oi}"
+      onclick="selectOpt(${si},${qi},${oi})"
+      data-qi="${qi}" data-oi="${oi}">
+      <span class="opt-letter">${letters[oi]}</span>
+      <span class="opt-text">${opt}</span>
+    </button>`).join('')}
+  </div>
+</div>`;
+}
+
+// ───────────────────────────────────────────────────────
+//  QUIZ LOGIC
+// ───────────────────────────────────────────────────────
+function selectOpt(si, qi, oi) {
+  if (quizSubmitted[si]) return;
+  
+  // Deselect all options for this question
+  sessions[si].quiz[qi].opts.forEach((_, j) => {
+    const btn = document.getElementById(`opt-${si}-${qi}-${j}`);
+    btn.classList.remove('selected');
+  });
+  
+  // Select this one
+  document.getElementById(`opt-${si}-${qi}-${oi}`).classList.add('selected');
+  
+  // Save answer
+  if (!quizAnswers[si]) quizAnswers[si] = {};
+  quizAnswers[si][qi] = oi;
+  
+  // Check if all questions answered
+  const allAnswered = sessions[si].quiz.every((_, qIdx) => 
+    quizAnswers[si] && quizAnswers[si][qIdx] !== undefined
+  );
+  document.getElementById(`submit-btn-${si}`).disabled = !allAnswered;
+}
+
+function submitQuiz(si) {
+  if (quizSubmitted[si]) return;
+  const s = sessions[si];
+  let correct = 0;
+  
+  s.quiz.forEach((q, qi) => {
+    const chosen = quizAnswers[si]?.[qi];
+    const correctAns = q.ans;
+    
+    // Disable all options
+    q.opts.forEach((_, oi) => {
+      const btn = document.getElementById(`opt-${si}-${qi}-${oi}`);
+      btn.disabled = true;
+      btn.classList.remove('selected');
+      if (oi === correctAns) {
+        btn.classList.add('correct');
+      } else if (oi === chosen && chosen !== correctAns) {
+        btn.classList.add('wrong');
+      }
+    });
+    
+    if (chosen === correctAns) correct++;
+  });
+  
+  quizSubmitted[si] = true;
+  
+  // Update score badge
+  const badge = document.getElementById(`score-badge-${si}`);
+  badge.textContent = `${correct} / 3`;
+  if (correct === 3) {
+    badge.style.background = 'rgba(72,187,120,0.15)';
+    badge.style.color = '#2D7D50';
+  } else {
+    badge.style.background = 'rgba(252,129,129,0.15)';
+    badge.style.color = '#9B2C2C';
+  }
+  
+  // Show result message
+  const msg = document.getElementById(`result-msg-${si}`);
+  if (correct === 3) {
+    msg.textContent = '✓ ¡Perfecto! 3/3 respuestas correctas. Sesión aprobada.';
+    msg.className = 'result-message success';
+    msg.style.display = 'block';
+    // Hide submit, hide retry
+    document.getElementById(`submit-btn-${si}`).style.display = 'none';
+    document.getElementById(`retry-btn-${si}`).style.display = 'none';
+    // Unlock next
+    unlockNext(si);
+  } else {
+    msg.textContent = `✗ ${correct}/3 correctas. Necesitas 3/3 para avanzar. Revisa el material y reintenta.`;
+    msg.className = 'result-message fail';
+    msg.style.display = 'block';
+    // Show retry
+    document.getElementById(`retry-btn-${si}`).style.display = 'inline-block';
+    document.getElementById(`submit-btn-${si}`).style.display = 'none';
+  }
+}
+
+function retryQuiz(si) {
+  // Reset state
+  quizSubmitted[si] = false;
+  if (quizAnswers[si]) quizAnswers[si] = {};
+  
+  // Reset UI
+  const s = sessions[si];
+  s.quiz.forEach((q, qi) => {
+    q.opts.forEach((_, oi) => {
+      const btn = document.getElementById(`opt-${si}-${qi}-${oi}`);
+      btn.disabled = false;
+      btn.classList.remove('selected', 'correct', 'wrong');
+    });
+  });
+  
+  // Reset score badge
+  const badge = document.getElementById(`score-badge-${si}`);
+  badge.textContent = '0 / 3';
+  badge.style.background = '';
+  badge.style.color = '';
+  
+  // Reset message
+  const msg = document.getElementById(`result-msg-${si}`);
+  msg.style.display = 'none';
+  msg.textContent = '';
+  msg.className = 'result-message';
+  
+  // Show submit button again, hide retry
+  const submitBtn = document.getElementById(`submit-btn-${si}`);
+  submitBtn.style.display = 'inline-block';
+  submitBtn.disabled = true;
+  document.getElementById(`retry-btn-${si}`).style.display = 'none';
+}
+
+function unlockNext(si) {
+  completed.add(si);
+  if (si + 1 <= sessions.length - 1) {
+    unlockedUp = Math.max(unlockedUp, si + 1);
+  }
+  // Show next card
+  const nextSection = document.getElementById(`next-section-${si}`);
+  if (nextSection) {
+    nextSection.classList.add('visible');
+  }
+  // Rebuild sidebar + progress
+  buildSidebar();
+  buildProgressBar();
+  
+  // Rebuild next page (it was locked, now unlock it)
+  if (si + 1 < sessions.length) {
+    const nextPage = document.getElementById(`page-${si+1}`);
+    if (nextPage) {
+      nextPage.innerHTML = buildSessionPage(sessions[si+1], si+1).replace(/^<div[^>]*>/, '').replace(/<\/div>$/, '');
+      // Actually rebuild fully
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = buildSessionPage(sessions[si+1], si+1);
+      const newPage = wrapper.firstChild;
+      newPage.id = `page-${si+1}`;
+      nextPage.parentNode.replaceChild(newPage, nextPage);
+    }
+  }
+}
+
+function navigate(i) {
+  if (i > unlockedUp) return;
+  
+  // Hide all pages
+  document.querySelectorAll('.session-page').forEach(p => p.classList.remove('active'));
+  
+  // Show target
+  const target = document.getElementById(`page-${i}`);
+  if (target) target.classList.add('active');
+  
+  currentSession = i;
+  buildSidebar();
+  
+  // Scroll to top
+  document.getElementById('main-content').scrollTop = 0;
+  window.scrollTo(0, 0);
+  
+  // Close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ───────────────────────────────────────────────────────
+//  INIT
+// ───────────────────────────────────────────────────────
+buildSidebar();
+buildProgressBar();
+buildMain();
+</script>
+</body>
+</html>
